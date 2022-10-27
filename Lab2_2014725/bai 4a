@@ -1,0 +1,34 @@
+.data
+myMessage: .asciiz "Nhap so co 10 phan tu: "
+result: .asciiz "\nHieu phan tu 2 va 5 la: "
+.text
+main:
+     li $v0,4
+     la $a0, myMessage
+     syscall
+     
+     li $v0, 8
+     li	$a1, 11
+     syscall
+     move $t0, $a0
+  
+     lb $t2, 2($t0)	#load byte index 2
+     lb	$t5, 5($t0)	#load byte index 5
+     
+     sub $t3, $t2, $t5	
+     
+     #print result
+     li $v0,4
+     la $a0, result
+     syscall
+     
+     li $v0,1
+     move $a0,$t3
+     syscall
+     
+     li $v0, 10
+     syscall
+     
+
+     
+     

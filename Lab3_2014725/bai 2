@@ -1,0 +1,55 @@
+.data
+	input1: .asciiz "Nhap a: "
+	input2: .asciiz "Nhap b: "
+	input3: .asciiz "Nhap c: "
+	ifMessage: .asciiz "a = b * c = "
+	elseMessage: .asciiz "a = b + c = "
+.text	
+main:
+	#enter input
+	li 	$v0, 4
+	la 	$a0, input1
+	syscall
+	li 	$v0, 5
+	syscall
+	move 	$t0, $v0
+	
+	li 	$v0, 4
+	la 	$a0, input2
+	syscall
+	li 	$v0, 5
+	syscall
+	move 	$t1, $v0
+	
+	li 	$v0, 4
+	la 	$a0, input3
+	syscall
+	li 	$v0, 5
+	syscall
+	move 	$t2, $v0
+	
+	#if-else statement
+	slti 	$s0, $t0, -5
+ 	sge 	$s1, $t0, 3
+ 	or 	$s0, $s0, $s1
+ 	beqz 	$s0, else
+
+ 	#if
+ 	mul	$t0, $t1, $t2  # a = b * c
+ 	li 	$v0, 4
+	la 	$a0, ifMessage
+	syscall
+ 	j Endif
+ else:
+ 	add	$t0, $t1, $t2  # a = b + c
+ 	li 	$v0, 4
+	la 	$a0, elseMessage
+	syscall
+ Endif:
+
+	li 	$v0, 1
+	move	$a0, $t0
+	syscall
+	
+ 	li $v0, 10
+ 	syscall 	 	         	 	         	        	         	         	           	

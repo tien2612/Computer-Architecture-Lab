@@ -1,0 +1,55 @@
+.data	
+	input: .asciiz "Enter n: "
+	Fib:   .asciiz "F(n) = "
+.text
+.globl main
+main:
+	li	$v0, 4
+	la	$a0, input
+	syscall
+	
+	li 	$v0, 5
+	syscall
+	move	$t0, $v0
+	
+	beq 	$t0, 0, Case_0	# if n = 0 return 0
+	beq 	$t0, 1, Case_1	# if n = 0 return 0
+	
+	li	$t1, 0		# khoi tao f0 = 0
+	li	$t2, 1		# khoi tao f1 = 1
+	li	$t3, 0		# f(n)
+	li	$t5, 2		# khoi tao index
+	for:
+		bgt	$t5, $t0, exit_loop
+		add	$t3, $t2, $t1	# fn = fn-1 + fn-2
+		addi	$t5, $t5, 1	# increase index by 1
+		add	$t1, $t2, $zero	# f(n-2) = f(n-1)
+		add	$t2, $t3, $zero	# f(n-1) = f(n)
+		j 	for
+	exit_loop:
+	
+	# print result
+	li	$v0, 4
+	la	$a0, Fib
+	syscall
+	
+	li	$v0, 1
+	move	$a0, $t3
+	syscall
+	
+	li	$v0, 10  # exit()
+	syscall
+	
+	Case_0:
+		li 	$v0, 1
+		move	$a0, $zero
+		syscall
+		j 	exit_case
+	Case_1:
+		li	$v0, 1
+		li	$t3, 1
+		move	$a0, $t3
+		syscall
+		j 	exit_case
+	exit_case:
+

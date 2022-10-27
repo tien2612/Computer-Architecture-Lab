@@ -1,0 +1,83 @@
+.data
+message1: .asciiz "question a)\nenter a: "
+message2: .asciiz "enter b: "
+message3: .asciiz "enter c: "
+message4: .asciiz "f(a,b,c) = (a - b) + c = "
+messageb: .asciiz "\nquestion b)\nKien Truc May Tinh 2020\n"
+messagec: .asciiz "question c)\nNhap chuoi 10 ki tu: "
+string: .asciiz "\nChuoi da nhap la: "
+chuoi:  .asciiz
+.text
+# a)
+
+#messeage
+li $v0,4
+la $a0,message1
+syscall
+
+#read number1
+li,$v0,5
+syscall
+#store number1
+move $t0,$v0
+
+#messeage
+li $v0,4
+la $a0,message2
+syscall
+
+#read number2
+li,$v0,5
+syscall
+#store number2
+move $t1,$v0
+
+#messeage
+li $v0,4
+la $a0,message3
+syscall
+
+#read number3
+li,$v0,5
+syscall
+#store number2
+move $t2,$v0
+
+#result
+sub $t3,$t0,$t1
+add $t3,$t3,$t2
+#messeage
+li $v0,4
+la $a0,message4
+syscall
+#display result
+li $v0,1
+move $a0,$t3
+syscall
+
+# b)
+li $v0,4
+la $a0,messageb
+syscall
+
+# c)
+li $v0,4
+la $a0,messagec
+syscall
+
+li $v0, 8	
+la $a0, chuoi
+li $a1, 11
+syscall
+
+li $v0, 4
+la $a0, string
+syscall
+
+li $v0, 4
+la $a0, chuoi
+syscall
+
+li $v0, 10
+syscall 
+

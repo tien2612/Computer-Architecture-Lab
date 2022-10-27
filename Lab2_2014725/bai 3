@@ -1,0 +1,80 @@
+.data
+message1: .asciiz "enter a: "
+message2: .asciiz "enter b: "
+message3: .asciiz "enter c: "
+message4: .asciiz "enter d: "
+message5: .asciiz "enter x: "
+message6: .asciiz "f(a,b,c,d,x) = a.x^3 - b.x^2 + cx - d = "
+.text
+# a)
+
+#messeage
+li $v0,4
+la $a0,message1
+syscall
+
+#read a
+li,$v0,5
+syscall
+#store a
+move $t0,$v0
+
+#messeage
+li $v0,4
+la $a0,message2
+syscall
+
+#read b
+li,$v0,5
+syscall
+#store b
+move $t1,$v0
+
+#messeage
+li $v0,4
+la $a0,message3
+syscall
+
+#read c
+li,$v0,5
+syscall
+#store c
+move $t2,$v0
+
+#messeage
+li $v0,4
+la $a0,message4
+syscall
+
+#read d
+li,$v0,5
+syscall
+#store d
+move $t3,$v0
+
+#messeage
+li $v0,4
+la $a0,message5
+syscall
+
+#read x
+li,$v0,5
+syscall
+#store x
+move $t4,$v0
+
+#
+mul $s0,$t0,$t4 # a.x
+sub $s0,$s0,$t1 # a.x - b
+mul $s0,$s0,$t4 # (ax-b)x
+add $s0,$s0,$t2 # (ax-b)x + c
+mul $s0,$s0,$t4 # ((ax-b)x + c)x
+sub $s0,$s0,$t3
+#messeage
+li $v0,4
+la $a0,message6
+syscall
+#display result
+li $v0,1
+move $a0,$s0
+syscall

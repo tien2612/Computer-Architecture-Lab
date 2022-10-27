@@ -1,0 +1,35 @@
+.data	
+	myString: .asciiz "Computer Architecture CSE-HCMUT"
+	myMessage: .asciiz "Gia tri index 'e' dau tien la: "
+.text
+	la	$a0, myString
+	add	$s0, $a0, $zero
+	
+	li	$t1, 0	# index t1
+	li	$t5, 0	# flag de biet tim duoc e chua
+	add	$t0, $s0, $zero
+	while:
+		add	$t3, $t1, $t0		
+		lb	$t4, 0($t3)		# load byte
+		beqz	$t4, exit		# found \n
+		beq	$t4, 101, found_e	# found first 'e' in string
+		addi	$t1, $t1, 1		# increase index by 1
+		j	while
+	found_e:
+		li	$t5, 1		# flag = 1, found 'e' in string
+	exit:
+		li	$v0, 4
+		la	$a0, myMessage
+		syscall
+		
+		beqz	$t5, else	# not found 'e'
+		j	Endif
+		else:
+			li	$t1, -1
+		Endif:
+			li	$v0, 1
+			move	$a0, $t1
+			syscall
+			
+	li	$v0, 10
+	syscall

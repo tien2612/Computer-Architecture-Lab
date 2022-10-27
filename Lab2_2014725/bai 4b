@@ -1,0 +1,44 @@
+.data
+input: .asciiz "2014725 - Nguyen Phuc Tien"
+output:	.space	256
+
+.text
+.globl main
+main:	
+	la	$a0, input
+	li	$v0, 25		
+	
+	add	$t1, $zero, $v0		
+	add	$t2, $zero, $a0		
+	add	$a0, $zero, $v0		
+	
+	li	$t0, 0		
+	li	$t3, 0			
+	li	$t5, 1			# index t5 = 1
+	
+	add	$t3, $t2, $t0		# dung de lay ki tu dau tien
+	add 	$t6, $t2, $t1		# dung de lay ki tu cuoi cung, t1 = strlen - 1
+	lb	$t7, 0($t6)		# lay ki tu cuoi cung cua input
+	sb	$t7, output($zero)	# luu ki tu cuoi cung vao index 0 cua output
+	add	$t6, $t2, $zero
+	lb 	$s0, 0($t6)		# lay ki tu cuoi cung luu vao thanh ghi s0
+	myLoop:
+		bgt 	$t5, $a0, myLoop_exit
+		add	$t6, $t2, $t5   # dich trai 1 don vi
+		lb	$t7, 0($t6)	# lay ki tu dau tien cua t6
+		sb	$t7, output($t5) # luu vao index t5
+		addi 	$t5, $t5, 1
+		j 	myLoop
+	myLoop_exit:
+	sb	$s0, output($a0) # luu ki tu dau tien vao index cuoi cung cua output
+	#print result
+	li 	$v0, 4
+	la 	$a0, output
+	syscall
+	
+	li	$v0, 10			# exit()
+	syscall
+	 
+
+
+	

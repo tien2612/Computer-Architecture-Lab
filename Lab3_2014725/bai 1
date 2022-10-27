@@ -1,0 +1,30 @@
+.data
+	myMessage: .asciiz "Enter a: "
+	ifMessage: .asciiz "Computer Science and Engineering, HCMUT"
+	elseMessage: .asciiz "Computer Architecture 2020" 
+.text
+main:
+	li 	$v0, 4
+	la 	$a0, myMessage
+	syscall 
+	
+	li 	$v0, 5
+	syscall
+	move 	$t0, $v0 
+	
+	rem 	$t1, $t0, 2 #t1 is remainder of a % 2
+	beqz 	$t1, else
+	# print if message
+	li 	$v0, 4
+	la 	$a0, ifMessage
+	syscall
+	j Endif
+else:
+	li 	$v0, 4
+	la 	$a0, elseMessage
+	syscall
+Endif:
+
+	li 	$v0, 10
+	syscall
+	

@@ -1,0 +1,48 @@
+.data
+	input: .asciiz "Enter your input: "
+	myMessage: .asciiz "a = "
+.text
+main:
+	li 	$t1, 200
+	li 	$t2, 4
+	
+	li 	$v0, 4
+	la 	$a0, input
+	syscall
+	
+	li 	$v0, 5
+	syscall
+	move 	$s0, $v0
+	
+	beq	$s0, 1, A1_CON
+	beq	$s0, 2, A2_CON
+	beq	$s0, 3, A3_CON
+	beq	$s0, 4, A4_CON
+	j	default_CON
+	A1_CON:
+	add	$t0, $t1, $t2   # a = b + c
+	j	done
+	A2_CON:
+	sub	$t0, $t1, $t2   # a = b - c	
+	j 	done
+	A3_CON:
+	mul	$t0, $t1, $t2   # a = b * c
+	j done
+	A4_CON:
+	div 	$t0, $t1, $t2   # a = b / c
+	j 	done
+	default_CON:
+	li	$t0, 0		# case default
+	
+	done:
+	
+	li	$v0, 4
+	la	$a0, myMessage
+	syscall
+	
+	li	$v0, 1
+	move	$a0, $t0
+	syscall
+	
+	li $v0, 10	#exit
+	syscall
